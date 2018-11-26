@@ -1,0 +1,24 @@
+{
+  "name": "workspace",
+  "version": "1.0.0",
+  "description": "SE3316 Final Project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ascroob/se3316-ascroob-lab5.git"
+  },
+  "author": "Amber Scrooby",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ascroob/se3316-ascroob-lab5/issues"
+  },
+  "homepage": "https://github.com/ascroob/se3316-ascroob-lab5#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "mongoose": "^5.3.13"
+  }
+}
