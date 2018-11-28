@@ -1,0 +1,24 @@
+<h2>Popular Items</h2><br>
+
+<mat-accordion>
+ <div *ngFor="let product of products | slice:0:7; let i=index" >
+
+      <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              {{product.name}}
+            </mat-panel-title>
+            <mat-panel-description>
+              {{product.descrip}}
+            </mat-panel-description>
+      </mat-expansion-panel-header>
+    
+      <p>Product Details</p><br>
+      Price: ${{product.price}}<br>
+      In stock: {{product.quantity}}
+    
+        </mat-expansion-panel>
+    <br>
+  </div>
+  </mat-accordion>
+

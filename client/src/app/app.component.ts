@@ -9,5 +9,5 @@ import { auth } from 'firebase/app';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'client';
+  title = 'Lab 5';
 }

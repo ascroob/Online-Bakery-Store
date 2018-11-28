@@ -32,11 +32,11 @@ export class AuthService {
     this.firebaseAuth
       .auth
       .signInWithEmailAndPassword(email, password)
-      .then(value => {
-        console.log('Nice, it worked!');
-      })
-      .catch(err => {
-        console.log('Something went wrong:',err.message);
+      .then(() => { if (!this.firebaseAuth.auth.currentUser.emailVerified){
+        alert('We are still waiting for your email verification!');
+      }
+      }).catch(err => {
+        alert('Hmm...something seems wrong here! Check if your email and password were entered correctly. Otherwise, your account may have been disabled or the e-mail you are trying to sign up with already exists.');
       });
   }
 

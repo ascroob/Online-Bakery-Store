@@ -3,6 +3,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 
 const product = require('./routes/product.route'); // Imports routes for the products
+const user = require('./routes/user.route'); // Imports routes for users
 const app = express();
 
 // Set up mongoose connection
@@ -16,9 +17,10 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
-app.use('/products', product);
+app.use('/api/products', product);
+app.use('/api/users', user);
 
-let port = process.env.PORT;
+let port = 8081;
 
 app.listen(port, () => {
     console.log('Server is up and running on port number ' + port);

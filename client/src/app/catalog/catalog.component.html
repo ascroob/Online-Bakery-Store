@@ -1,0 +1,26 @@
+<h2>All Items</h2>
+<br>
+
+
+
+  
+  <div *ngFor="let product of products" >
+      <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              {{product.name}}
+            </mat-panel-title>
+            <mat-panel-description>
+              {{product.descrip}}
+            </mat-panel-description>
+      </mat-expansion-panel-header>
+    
+      <p>Product Details</p><br>
+      Price: ${{product.price}}<br>
+      In stock: {{product.quantity}}
+    
+        </mat-expansion-panel>
+  <br>
+  </div>
+
+
