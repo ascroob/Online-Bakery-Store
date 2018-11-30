@@ -9,11 +9,11 @@ import { AngularFireModule } from '@angular/fire';
 import { environment } from '../environments/environment';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { auth } from 'firebase/app';
-import { FormsModule } from '@angular/forms';
 
 import { AuthService } from './auth.service';
 import { LoginComponent } from './login/login.component';
 import { HomepageComponent } from './homepage/homepage.component';
+import { CartComponent } from './cart/cart.component';
 
 import {HttpClientModule }from '@angular/common/http';
 import { UserDataComponent } from './user-data/user-data.component';
@@ -24,6 +24,15 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatListModule} from '@angular/material/list';
 import {MatExpansionModule} from '@angular/material/expansion';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {platformBrowserDynamic} from '@angular/platform-browser-dynamic';
+
+import {DragDropModule} from '@angular/cdk/drag-drop';
+import {ScrollingModule} from '@angular/cdk/scrolling';
+import {CdkTableModule} from '@angular/cdk/table';
+import {CdkTreeModule} from '@angular/cdk/tree';
+import { MatMenuModule, MatButtonModule, MatIconModule, MatCardModule, MatSidenavModule } from '@angular/material';
+
 
 const appRoutes: Routes = [
   {
@@ -39,6 +48,11 @@ const appRoutes: Routes = [
     path: 'catalog',
     component: CatalogComponent,
     data: { title: 'Catalog' }
+  },
+   {
+    path: 'cart',
+    component: CartComponent,
+    data: { title: 'Shopping Cart' }
   }
 ];
 
@@ -49,7 +63,8 @@ const appRoutes: Routes = [
     HomepageComponent,
     UserDataComponent,
     ProductDataComponent,
-    CatalogComponent
+    CatalogComponent,
+    CartComponent
   ],
   imports: [
     RouterModule.forRoot(
@@ -66,9 +81,17 @@ const appRoutes: Routes = [
     BrowserAnimationsModule,
     MatDividerModule,
     MatListModule,
-    MatExpansionModule
+    MatExpansionModule,
+    ReactiveFormsModule,
+    MatMenuModule,
+    MatButtonModule,
+    MatIconModule,
+    MatCardModule,
+    MatSidenavModule
   ],
   providers: [AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
+platformBrowserDynamic().bootstrapModule(AppModule);

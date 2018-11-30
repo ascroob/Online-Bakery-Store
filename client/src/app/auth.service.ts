@@ -24,7 +24,7 @@ export class AuthService {
                 console.log('Please verify your email');
                 alert('Please verify your email');
             }).catch((error) => {
-                console.log('Error: ' + error);
+                alert('Sorry, that email is already registered with an account.');
             }));
   }
   
@@ -46,6 +46,15 @@ export class AuthService {
       .signOut();
   }
 
+  // Returns true if user is logged in
+  get authenticated(): boolean {
+    return this.firebaseAuth.auth !== null;
+  }
+  
+  get currentUserObservable(): any {
+  return this.firebaseAuth.auth.currentUser;
+}
+  
 }
   
 

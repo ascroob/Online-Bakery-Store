@@ -4,6 +4,8 @@ const bodyParser = require('body-parser');
 
 const product = require('./routes/product.route'); // Imports routes for the products
 const user = require('./routes/user.route'); // Imports routes for users
+const comment = require('./routes/comment.route'); // Imports routes for comments
+const cart = require('./routes/cart.route'); // Imports routes for comments
 const app = express();
 
 // Set up mongoose connection
@@ -19,6 +21,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use('/api/products', product);
 app.use('/api/users', user);
+app.use('/api/comments', comment);
+app.use('/api/cart', cart);
 
 let port = 8081;
 

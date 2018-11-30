@@ -2,25 +2,63 @@
 <br>
 
 
+<mat-accordion>
+ <div *ngFor="let product of products " >
 
-  
-  <div *ngFor="let product of products" >
       <mat-expansion-panel>
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-              {{product.name}}
-            </mat-panel-title>
-            <mat-panel-description>
-              {{product.descrip}}
-            </mat-panel-description>
-      </mat-expansion-panel-header>
-    
-      <p>Product Details</p><br>
-      Price: ${{product.price}}<br>
-      In stock: {{product.quantity}}
-    
-        </mat-expansion-panel>
-  <br>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                {{product.name}}
+              </mat-panel-title>
+              <mat-panel-description>
+                {{product.descrip}}
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+            
+        <p>Product Details</p><br>
+        
+        In stock: {{product.quantity}}<br>
+        Total sold: {{product.purchased}}<br><br>
+          <button type="button" (click) = addToCart> + </button>
+          <button type="button" (click) = removeFromCart> - </button>
+          <br>
+        <ng-container *ngFor = "let comment of comments | slice:0:5; let i=index">
+          <div  *ngIf = "product._id == comment.productID"> <!--need async as users-->
+              <div  style="width: 45%;
+               float: left;
+               background-color:red
+               white-space: nowrap;
+               overflow:hidden !important;
+               text-overflow: ellipsis;">
+             
+            Comment by: {{comment.username}}<br>
+            Product Rating: {{comment.rating}}<br>
+            {{comment.comment}}<br><br>
+          </div>
+          </div>
+        </ng-container>
+        <br>
+        <button type="button" (click) = "showAddComment()">Add Comment</button>
+        <br><br>
+        <form >
+        <div  >
+          Comment: <input type="text" name="comment" [(ngModel)]="comment"/>
+          Rating: <select  name = "rating" [(ngModel)]="rating">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+          </select><p>   </p>
+          
+          <input type="submit" value="submit" [id] = "product._id" (click)="onClickID($event, comment, rating)">
+        </div>
+       </form>
+              
+    </mat-expansion-panel>
+    <br>
   </div>
+  </mat-accordion>
+  <br><br>
 
 

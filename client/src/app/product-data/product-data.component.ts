@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { DataService } from '../data.service'; 
 import {Observable} from 'rxjs/Rx';
+import { AngularFireAuth } from '@angular/fire/auth';
+import * as firebase from 'firebase/app';
 
 @Component({
   selector: 'app-product-data',
@@ -10,11 +12,13 @@ import {Observable} from 'rxjs/Rx';
 })
 export class ProductDataComponent  {
   products;
+  comments;
 
   constructor(private _dataService: DataService) {
       //  this._dataService.getProducts()
         //.subscribe(res => this.products = res);
      this.getProducts();
+     this.getComments();
      console.log(this.products);
   }
   
@@ -39,5 +43,71 @@ export class ProductDataComponent  {
       () => console.log('done loading products')
     );
   }
+  
+  getComments(){
+     this._dataService.getComments().subscribe(
+      data => { this.comments = data},
+      err => console.error(err),
+      () => console.log('done loading comments')
+    );
+  }
+  
+   showAddComment() {
+    var x = document.getElementById("comment");
+    if (x.style.display === "none") {
+        x.style.display = "block";
+    } else {
+        x.style.display = "none";
+    }
+}
+  
+  onClickID(event, comment: String, rating: Number) {
+    var user = firebase.auth().currentUser;
 
+    if (user) {
+      if (comment = ""){
+        alert('Please add a comment or rating!');
+      }
+      
+      var target = event.target || event.srcElement || event.currentTarget;
+      var idAttr = target.attributes.id;
+      var value = idAttr.value;
+      
+      var data = {
+        productID: value,
+        username: firebase.auth().currentUser.email,
+        comment: comment,
+        rating: rating
+    }
+     this._dataService.addComment(data)
+      .subscribe(res => console.log(res));
+    } else {
+      alert('Please log in to add a comment.');
+    }
+  }
+  
+  onClickCart(event, cartAdd: Number){
+    var user = firebase.auth().currentUser;
+
+    if (user) {
+      var target = event.target || event.srcElement || event.currentTarget;
+      var idAttr = target.attributes.id;
+      var value = idAttr.value;
+      
+      //if number of items added increases quantity in stock, show alert
+      
+      var data = {
+        username: firebase.auth().currentUser.email,
+        productID: value,
+        amount: cartAdd
+      }
+      this._dataService.addToCart(data)
+      .subscribe(res => console.log(res));
+      this._dataService.updateStock(value)
+      .subscribe(res => console.log(res));
+    } else {
+      alert('Please log in to add items to cart.');
+    }
+    
+  }
 }

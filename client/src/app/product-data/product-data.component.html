@@ -1,23 +1,79 @@
+<header>
+  <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+  <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+  <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+  
+</header>
+
 <h2>Popular Items</h2><br>
 
 <mat-accordion>
- <div *ngFor="let product of products | slice:0:7; let i=index" >
+ <div *ngFor="let product of products | slice:0:7; let i=index " >
 
       <mat-expansion-panel>
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-              {{product.name}}
-            </mat-panel-title>
-            <mat-panel-description>
-              {{product.descrip}}
-            </mat-panel-description>
-      </mat-expansion-panel-header>
-    
-      <p>Product Details</p><br>
-      Price: ${{product.price}}<br>
-      In stock: {{product.quantity}}
-    
-        </mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                {{product.name}}
+              </mat-panel-title>
+              <mat-panel-description>
+                {{product.descrip}}
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+            
+        <p>Product Details</p><br>
+        
+        In stock: {{product.quantity}}<br>
+        Number Purchased: {{product.purchased}}<br><br>
+        
+          Amount: <select  name = "cartAdd" [(ngModel)]="cartAdd">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+          </select><p>   </p>
+          
+          <input type="submit" value="Add to Cart" [id] = "product._id" (click)="onClickCart($event, cartAdd)">
+          <br>
+        <ng-container *ngFor = "let comment of comments | slice:0:5; let i=index">
+          <div  *ngIf = "product._id == comment.productID"> <!--need async as users-->
+              <div  style="width: 45%;
+               float: left;
+               background-color:red
+               white-space: nowrap;
+               overflow:hidden !important;
+               text-overflow: ellipsis;">
+             
+            Comment by: {{comment.username}}<br>
+            Product Rating: {{comment.rating}}<br>
+            {{comment.comment}}<br><br>
+          </div>
+          </div>
+        </ng-container>
+        <br>
+        <button type="button" (click) = "showAddComment()">Add Comment</button>
+        <br><br>
+        <form >
+        <div  >
+          Comment: <input type="text" name="comment" [(ngModel)]="comment"/>
+          Rating: <select  name = "rating" [(ngModel)]="rating">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+          </select><p>   </p>
+          
+          <input type="submit" value="submit" [id] = "product._id" (click)="onClickID($event, comment, rating)">
+        </div>
+       </form>
+              
+    </mat-expansion-panel>
     <br>
   </div>
   </mat-accordion>
