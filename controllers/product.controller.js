@@ -16,7 +16,7 @@ exports.product_findAll = function (req, res, next) {
             console.log(err);
             return next(err);
         }
-    });
+    }).sort({purchased: -1});
 };
 
 exports.product_create = function (req, res, next) {
@@ -49,6 +49,16 @@ exports.product_details = function (req, res, next) {
         res.send(product);
     });
 };
+
+exports.product_amount = function (req, res, next){
+    Product.findById(req.params.id, function (err, results){
+        res.send(results);
+        if (err) {
+            console.log(err);
+            return next(err);
+        }
+    }).select("quantity");
+}
 
 exports.product_update = function (req, res, next) {
     Product.findByIdAndUpdate(req.params.id, {$set: req.body}, function (err, product) {

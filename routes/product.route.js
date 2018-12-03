@@ -10,6 +10,7 @@ router.get('/all', product_controller.product_findAll);
 
 router.post('/create', product_controller.product_create);
 router.get('/:id', product_controller.product_details);
+router.get('/:id/quantity', product_controller.product_amount);
 router.put('/:id/update', product_controller.product_update);
 //router.put('/:id/updaterating', product_controller.product_update_rating);
 router.delete('/:id/delete', product_controller.product_delete);

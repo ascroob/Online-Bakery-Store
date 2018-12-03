@@ -35,3 +35,10 @@ exports.comment_findAll = function (req, res, next) {
        res.send(results);
     });
 };
+
+exports.comment_findItem = function (req, res, next) {
+    Comment.find({}, function (err, results){
+       console.log(results); 
+       res.send(results);
+    });
+};

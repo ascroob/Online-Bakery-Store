@@ -14,7 +14,7 @@ import { AuthService } from './auth.service';
 import { LoginComponent } from './login/login.component';
 import { HomepageComponent } from './homepage/homepage.component';
 import { CartComponent } from './cart/cart.component';
-
+import {HttpModule} from '@angular/http';
 import {HttpClientModule }from '@angular/common/http';
 import { UserDataComponent } from './user-data/user-data.component';
 import { ProductDataComponent } from './product-data/product-data.component';
@@ -32,6 +32,7 @@ import {ScrollingModule} from '@angular/cdk/scrolling';
 import {CdkTableModule} from '@angular/cdk/table';
 import {CdkTreeModule} from '@angular/cdk/tree';
 import { MatMenuModule, MatButtonModule, MatIconModule, MatCardModule, MatSidenavModule } from '@angular/material';
+import { ListsComponent } from './lists/lists.component';
 
 
 const appRoutes: Routes = [
@@ -53,6 +54,11 @@ const appRoutes: Routes = [
     path: 'cart',
     component: CartComponent,
     data: { title: 'Shopping Cart' }
+  },
+   {
+    path: 'lists',
+    component: ListsComponent,
+    data: { title: 'Collections' }
   }
 ];
 
@@ -64,7 +70,8 @@ const appRoutes: Routes = [
     UserDataComponent,
     ProductDataComponent,
     CatalogComponent,
-    CartComponent
+    CartComponent,
+    ListsComponent
   ],
   imports: [
     RouterModule.forRoot(
@@ -77,6 +84,7 @@ const appRoutes: Routes = [
     AngularFireAuthModule,
     FormsModule,
     HttpClientModule,
+    HttpModule,
     UiModule,
     BrowserAnimationsModule,
     MatDividerModule,

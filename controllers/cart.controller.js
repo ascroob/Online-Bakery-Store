@@ -29,8 +29,19 @@ exports.cart_create = function (req, res, next) {
 
 exports.cart_findAll = function (req, res, next) {
 
-    Cart.find({username: req.body}, function (err, results){
+    Cart.find({}, function (err, results){
        console.log(results); 
        res.send(results);
+    });
+};
+
+exports.cart_update = function (req, res, next) {
+    console.log(req.body);
+    Cart.findOneAndUpdate({"productID": req.body.productID}, {$inc: {amount: req.body.amount}}, function (err, cart) {
+        if (err) {
+            console.log(err);
+            return next(err);
+        }
+        res.send(cart);
     });
 };

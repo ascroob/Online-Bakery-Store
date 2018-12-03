@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import * as firebase from 'firebase/app';
 import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import { AuthService } from '../../auth.service';
 
 @Component({
   selector: 'app-header',
@@ -10,17 +11,12 @@ import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from
 })
 export class HeaderComponent implements OnInit {
 
-  constructor(private router: Router) { }
+    
+  constructor(private router: Router, private _authService: AuthService) { }
 
-  checkUser(){
-     var user = firebase.auth().currentUser;
-     if (!user){
-       alert ("Create an account to view cart!")
-        this.router.navigate(['/homepage']);
-     }
-  }
+  ngOnInit()  {
+       
 
-  ngOnInit() {
   }
 
 }

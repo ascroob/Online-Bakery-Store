@@ -23,10 +23,12 @@
     <div class="navbar-nav">
       <a class="nav-item nav-link active" href="#">Home</a>
       <a class="nav-item nav-link" href="/catalog">Baked Goods</a> 
-   <!--   <div *ngIf="!(authService.user | async)"> -->
+      <div *ngIf="(_authService.user | async)">
         <a class="nav-item nav-link" href="/cart">Shopping Cart</a>
- <!--     </div>  -->
+      </div>
+      <div *ngIf="(_authService.user | async)">
         <a class="nav-item nav-link" href="/lists">Lists</a>
+      </div>
       <a class="nav-item nav-link" href="#">Privacy & Security Policy</a>
       <a class="nav-item nav-link" href="#">DCMA Policy</a>
       

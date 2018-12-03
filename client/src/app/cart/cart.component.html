@@ -1,25 +1,30 @@
 <h2 align = "center">Your Shopping Cart</h2>
 
 <br>
+    <input type="button" value="Clear Cart" id="clear" (click)="clearCart()">
+    <input type="button" value="Purchase Items" id="purch" (click)="purchCart()">
 
+<br><br>
+<button (click)="userEmail()">View Cart Items</button>
+<div *ngIf = "!clear">
 <div *ngFor="let cart of carts" >
     <ul>        
-        <ng-container *ngFor = "let product of products">
-            <div  *ngIf = "cart.productID == product._id">
-                <li>   
-                    {{cart.username}}
-                    Item: {{product.name}}
-                    Quantity: {{cart.amount}}
-                    <input type="button" value="-" id="remove" onclick="minus()">
-                    <input type="button" value="+" id="add" onclick="plus()">
-                </li> <br>
+        <ng-container *ngFor = "let product of products" >
+            <div *ngIf = "cart.username == (_authService.user | async)?.email">
+                <div  *ngIf = "cart.productID == product._id">
+                    <li>   
+                        {{cart.username}}
+                        Item: {{product.name}}
+                        Quantity: {{cart.amount}}
+                        <input type="button" value="-" id="remove" onclick="minus()">
+                        <input type="button" value="+" id="add" onclick="plus()">
+                    </li> <br>
+                </div>
             </div>
         </ng-container>
     </ul>
 </div>
+</div>
+
 
 <br>
-    <input type="button" value="Clear Cart" id="clear" onclick="clearCart()">
-    <input type="button" value="Purchase Items" id="purch" onclick="purchCart()">
-
-<br><br>

@@ -32,7 +32,8 @@ export class AuthService {
     this.firebaseAuth
       .auth
       .signInWithEmailAndPassword(email, password)
-      .then(() => { if (!this.firebaseAuth.auth.currentUser.emailVerified){
+      .then(() => { 
+        if (!this.firebaseAuth.auth.currentUser.emailVerified){
         alert('We are still waiting for your email verification!');
       }
       }).catch(err => {
@@ -49,11 +50,15 @@ export class AuthService {
   // Returns true if user is logged in
   get authenticated(): boolean {
     return this.firebaseAuth.auth !== null;
+   
   }
   
   get currentUserObservable(): any {
   return this.firebaseAuth.auth.currentUser;
 }
+
+  
+
   
 }
   

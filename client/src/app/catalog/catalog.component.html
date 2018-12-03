@@ -17,12 +17,32 @@
             
         <p>Product Details</p><br>
         
-        In stock: {{product.quantity}}<br>
+        In stock: <p [(ngModel)] = "prodQuant">{{product.quantity}}</p><br>
         Total sold: {{product.purchased}}<br><br>
-          <button type="button" (click) = addToCart> + </button>
-          <button type="button" (click) = removeFromCart> - </button>
+          Amount: <select  name = "cartAdd" [(ngModel)]="cartAdd">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+          </select><p>   </p>
+          
+          <input type="submit" value="Add to Cart" [id] = "product._id" (click) = "onClickCart($event, cartAdd, product.quantity)"> 
+       <!--     <div *ngFor = "let cart of carts">
+              <div *ngIf = "cart.username == (_authService.user | async)?.email">
+                <div *ngIf = "cart.productID == product._id" >
+                  {{onClickCart($event, cartAdd)}}
+                </div>
+              </div>
+            </div>-->
+          
           <br>
-        <ng-container *ngFor = "let comment of comments | slice:0:5; let i=index">
+        <ng-container *ngFor = "let comment of comments ">
           <div  *ngIf = "product._id == comment.productID"> <!--need async as users-->
               <div  style="width: 45%;
                float: left;

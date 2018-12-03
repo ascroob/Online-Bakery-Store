@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { DataService } from '../data.service'; 
 import {Observable} from 'rxjs/Rx';
 import { AngularFireAuth } from '@angular/fire/auth';
@@ -10,16 +10,22 @@ import * as firebase from 'firebase/app';
   styleUrls: ['./product-data.component.css'],
   providers: [DataService]
 })
-export class ProductDataComponent  {
+export class ProductDataComponent implements OnInit  {
   products;
   comments;
 
   constructor(private _dataService: DataService) {
       //  this._dataService.getProducts()
         //.subscribe(res => this.products = res);
-     this.getProducts();
+     
      this.getComments();
-     console.log(this.products);
+    // console.log(this.products);
+  }
+  
+  ngOnInit(){
+      this.getProducts();
+     
+      
   }
   
   sort(){
@@ -42,6 +48,22 @@ export class ProductDataComponent  {
       err => console.error(err),
       () => console.log('done loading products')
     );
+    //use bubble sort to sort products before returning products to load on home page
+   // var temp = this.products;
+  //  setTimeout ( this.popIndex()
+    //    , 1000);
+  }
+  
+  popIndex(){
+      for (var i = (this.products.length-1); i >=0; i--){
+      for (var j = 1; j<=i; j++){
+        if(this.products[j-1].purchased<this.products[j].purchased){
+          var temp = this.products[j-1];
+          this.products[j-1]=this.products[j];
+          this.products[j]=temp;
+        }
+      }
+    }
   }
   
   getComments(){
@@ -60,54 +82,6 @@ export class ProductDataComponent  {
         x.style.display = "none";
     }
 }
-  
-  onClickID(event, comment: String, rating: Number) {
-    var user = firebase.auth().currentUser;
 
-    if (user) {
-      if (comment = ""){
-        alert('Please add a comment or rating!');
-      }
-      
-      var target = event.target || event.srcElement || event.currentTarget;
-      var idAttr = target.attributes.id;
-      var value = idAttr.value;
-      
-      var data = {
-        productID: value,
-        username: firebase.auth().currentUser.email,
-        comment: comment,
-        rating: rating
-    }
-     this._dataService.addComment(data)
-      .subscribe(res => console.log(res));
-    } else {
-      alert('Please log in to add a comment.');
-    }
-  }
   
-  onClickCart(event, cartAdd: Number){
-    var user = firebase.auth().currentUser;
-
-    if (user) {
-      var target = event.target || event.srcElement || event.currentTarget;
-      var idAttr = target.attributes.id;
-      var value = idAttr.value;
-      
-      //if number of items added increases quantity in stock, show alert
-      
-      var data = {
-        username: firebase.auth().currentUser.email,
-        productID: value,
-        amount: cartAdd
-      }
-      this._dataService.addToCart(data)
-      .subscribe(res => console.log(res));
-      this._dataService.updateStock(value)
-      .subscribe(res => console.log(res));
-    } else {
-      alert('Please log in to add items to cart.');
-    }
-    
-  }
 }
