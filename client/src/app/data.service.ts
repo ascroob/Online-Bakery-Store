@@ -38,8 +38,12 @@ export class DataService {
         return this._http.put('api/products/'+productID+'/update',  {$inc: { purchased: 1, quantity: -1}});
     }
     
-    updateCart (id, data){
+    updateCart (data){
         return this._http.put('api/cart/update', data);
+    }
+    
+    cartIncrement(data){
+        return this._http.put('api/cart/amount/update', data);
     }
     
     getProductItem(id){
@@ -50,4 +54,7 @@ export class DataService {
        return this._http.get('api/products/'+id+'/quantity');
     }
   
+    deleteCartItem(id){
+        return this._http.delete('api/cart/'+id+'/delete');
+    }
 }

@@ -45,3 +45,21 @@ exports.cart_update = function (req, res, next) {
         res.send(cart);
     });
 };
+
+exports.cart_amount = function (req, res, next) {
+    console.log(req.body);
+    Cart.findOneAndUpdate({"_id": req.body._id}, {$inc: {amount: req.body.amount}}, function (err, cart) {
+        if (err) {
+            console.log(err);
+            return next(err);
+        }
+        res.send(cart);
+    });
+};
+
+exports.cart_delete = function (req, res, next) {
+    Cart.findByIdAndRemove(req.params.id, function (err) {
+        if (err) return next(err);
+        res.send('Deleted successfully!');
+    })
+};

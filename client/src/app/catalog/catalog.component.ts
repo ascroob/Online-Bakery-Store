@@ -113,22 +113,20 @@ export class CatalogComponent {
     }
   }
   
+  
+  
   onClickCart(event, cartAdd: Number, prodQuant: Number){
-    console.log(prodQuant);
     var user = firebase.auth().currentUser;
 
     if (user) {
       var target = event.target || event.srcElement || event.currentTarget;
       var idAttr = target.attributes.id;
       var value = idAttr.value;
-     // console.log(prodQuant);
       
       this.getProductItem(value);
       var quan = this._dataService.getProductQuantity(value).subscribe(
           data => console.log(data)
         );
-        
-      console.log(quan);
       /**
       *check all items in the cart where the username matches the
       * email of the current user.
@@ -141,65 +139,47 @@ export class CatalogComponent {
       var amount;
       
         for (var j = 0; j< this.carts.length; j++){
-          console.log('entered for');
           if (this.carts[j].username == user.email){
-            console.log('entered if 1');
             
             if (this.carts[j].productID == value && cartAdd <= prodQuant){
-              console.log('entered if 2');
               
               var cart = {
                 productID: value,
                 amount: cartAdd
               };
               
-              this._dataService.updateCart(value, cart)
+              //update cart quantity of this item
+              this._dataService.updateCart(cart)
                .subscribe(res => console.log(res),
                 err => console.error(err));
            
               }
+              
+              else if (this.carts[j].productID == value && cartAdd > prodQuant){
+                //if user tries to add product > in stock, do not update cart. Ask user to try again
+                alert('We do not have enough of this product left in stock. Please choose a smaller amount to add to your cart.');
+              }
+               //exit for loop to prevent cart quantity from incrementing more than once
           }
-        /*  else {
-            data = {
+            else {
+            var data = {
               productID: value,
               username: firebase.auth().currentUser.email,
               amount: cartAdd
             };
               
-            this._dataService.updateCart.addToCart(data);
-          }*/
-          /*    if (amount){
-                if (amount >= cartAdd){
-                //  console.log('success, we got amount');
-                }
-                
-                else {
-                  alert('Your selected quantity is greater than the number of products in stock.')
-                }
-              }*/
-              
-             // console.log(amount);
-              /*if (this.products[i].quantity >cartAdd){
-              console.log('if working');
-              }*/
-              //this._dataService.updateCart(value, cartAdd);
-          //  }
-         // }
-        }
-      
-      //if number of items added increases quantity in stock, show alert
-      
-
-  /*    this._dataService.addToCart(data)
-      .subscribe(res => console.log(res));
-      this._dataService.updateStock(value)
-      .subscribe(res => console.log(res));*/
+            this._dataService.addToCart(data)
+            .subscribe(res => console.log(res),
+                err => console.error(err));
+            
+            break;
+          }
+          
+    } 
     } else {
       alert('Please log in to add items to cart.');
-    }
-    
-  }
-  
- 
-  
+  } 
+}
+
+
 }

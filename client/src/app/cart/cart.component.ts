@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {FormControl} from '@angular/forms';
 import { DataService } from '../data.service'; 
 import { AngularFireAuth } from '@angular/fire/auth';
-import{AuthService} from '../auth.service';
-import {firebase} from '@firebase/app';
+import * as firebase from 'firebase/app';
 import { auth} from 'firebase/app';
+import { AuthService } from '../auth.service';
 
 
 
@@ -13,15 +12,14 @@ import { auth} from 'firebase/app';
   selector: 'app-cart',
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.css'],
-  providers: [DataService]
+  providers: [DataService, AuthService]
 })
+
 export class CartComponent implements OnInit {
   carts;
   products;
   _email;
   clear = false;
-
-  mode = new FormControl('over');
   
   constructor(private _dataService: DataService, private _authService: AuthService) {
     
@@ -32,11 +30,7 @@ export class CartComponent implements OnInit {
   ngOnInit() {
   }
   
-  
-  
-  
   userEmail(){
-    
     this._email = auth().currentUser.email;
     console.log(this._email);
     
@@ -49,26 +43,47 @@ export class CartComponent implements OnInit {
   }
   
   getCart() {
-   // console.log(this._email);
    this._dataService.getCart().subscribe(
       data => { this.carts = data},
-      err => console.error(err),
-      () => console.log(this.carts)
-    );
+      err => console.error(err));
   }
   
    getProducts() {
-    // var email = _authService.currentUserObservable().email;
-     //console.log(email);
-     
    this._dataService.getProducts().subscribe(
       data => { this.products = data},
-      err => console.error(err),
-      () => console.log('products loaded')
-    );
-  
-    
-    // console.log(this._authService.email);
+      err => console.error(err));
    }
-
+   
+   //decrement number of items of this cart item by 1
+   minus(event, id){
+        var cart = {
+            _id: id,
+            amount: -1
+        };
+              
+         //update cart quantity of this item
+         this._dataService.cartIncrement(cart)
+            .subscribe(res => console.log(res),
+            err => console.error(err));
+       
+   }
+   
+   //increment cart value of this item by one if stock levels allow for it
+   plus(event, id){
+        var cart = {
+            _id: id,
+            amount: 1
+        };
+              
+         //update cart quantity of this item
+         this._dataService.cartIncrement(cart)
+            .subscribe(res => console.log(res),
+            err => console.error(err));
+   }
+   
+   remove(event, id){
+       this._dataService.deleteCartItem(id)
+            .subscribe(res => console.log(res),
+            err => console.error(err));
+   }
 }

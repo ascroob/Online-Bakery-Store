@@ -16,7 +16,7 @@ exports.product_findAll = function (req, res, next) {
             console.log(err);
             return next(err);
         }
-    }).sort({purchased: -1});
+    }).sort({purchased: -1}); //order items in descending order based on the # purchased
 };
 
 exports.product_create = function (req, res, next) {

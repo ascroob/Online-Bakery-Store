@@ -17,7 +17,7 @@
             
         <p>Product Details</p><br>
         
-        In stock: <p [(ngModel)] = "prodQuant">{{product.quantity}}</p><br>
+        In stock: {{product.quantity}}<br>
         Total sold: {{product.purchased}}<br><br>
           Amount: <select  name = "cartAdd" [(ngModel)]="cartAdd">
             <option value="1">1</option>
@@ -33,13 +33,7 @@
           </select><p>   </p>
           
           <input type="submit" value="Add to Cart" [id] = "product._id" (click) = "onClickCart($event, cartAdd, product.quantity)"> 
-       <!--     <div *ngFor = "let cart of carts">
-              <div *ngIf = "cart.username == (_authService.user | async)?.email">
-                <div *ngIf = "cart.productID == product._id" >
-                  {{onClickCart($event, cartAdd)}}
-                </div>
-              </div>
-            </div>-->
+  
           
           <br>
         <ng-container *ngFor = "let comment of comments ">

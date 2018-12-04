@@ -9,6 +9,7 @@ router.get('/test', cart_controller.test);
 router.post('/create', cart_controller.cart_create);
 router.get('/all', cart_controller.cart_findAll);
 router.put('/update', cart_controller.cart_update);
-//router.get('/:id/:username', cart_controller.cart_findItem);
+router.put('/amount/update', cart_controller.cart_amount);
+router.delete('/:id/delete', cart_controller.cart_delete);
 
 module.exports = router;
