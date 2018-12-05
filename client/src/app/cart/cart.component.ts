@@ -104,7 +104,7 @@ export class CartComponent implements OnInit {
    
    cartTotal(){
        for (var i = 0; i<this.carts.length; i++){
-           if (this.carts[i].username == _email){
+           if (this.carts[i].username == this._email){
           //     total += (this.carts[i].amount)*()
            }
        }

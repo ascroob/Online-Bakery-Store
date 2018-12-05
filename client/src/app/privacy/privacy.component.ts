@@ -48,13 +48,19 @@ export class PrivacyComponent implements OnInit {
       var idAttr = target.attributes.id;
       var value = idAttr.value;
       
+      var temp = this.encodeHTML(this.newText);
+      
       var data = {
-        text: newText
+        text: temp
       };
       
       this._dataService.updatePrivacy(value, data)
       .subscribe( data => { this.privacies = data},
       err => console.error(err));
   }
+
+   encodeHTML(e){
+      return e.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
+    }
 
 }

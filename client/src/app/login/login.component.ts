@@ -24,20 +24,19 @@ export class LoginComponent  {
       if (!user.emailVerified) this.resend = true;
     }
     console.log(user);
-   // console.log(user.emailVerified);
   };
   
   signup() {
-//    var tempEmail = encodeHTML(this.email);
-  //  var tempPass = encodeHTML(this.password);
-    this.authService.signup(this.email, this.password);
+    var tempEmail = this.encodeHTML(this.email);
+    var tempPass = this.encodeHTML(this.password);
+    this.authService.signup(tempEmail, tempPass);
     this.email = this.password = '';
   };
 
   login() {
-    //var tempEmail = encodeHTML(this.email);
-    //var tempPass = encodeHTML(this.password);
-    this.authService.login(this.email, this.password);
+    var tempEmail = this.encodeHTML(this.email);
+    var tempPass = this.encodeHTML(this.password);
+    this.authService.login(tempEmail, tempPass);
     this.email = this.password = '';    
   };
 
@@ -45,8 +44,8 @@ export class LoginComponent  {
     this.authService.logout();
   };
   
- /*  encodeHTML(e){
+   encodeHTML(e){
     return e.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
-  }*/
+  }
  
 }

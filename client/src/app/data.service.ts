@@ -113,4 +113,28 @@ export class DataService {
     dmcaNotice(id){
         return this._http.put('api/dmca/'+id+'/notice')
     }
+    
+    postCollection(data){
+        return this._http.post('api/collections/create', data)
+    }
+    
+    getCollections(){
+        return this._http.get('/api/collections/all');
+    }
+    
+    updateCollection(id, data){
+        return this._http.put('/api/collections/'+id+'/update', data);
+    }
+    
+    collectionProducts(id, data){
+        return this._http.put('/api/collections/'+id+'/products', data);
+    }
+    
+    deleteCollectionItem(id, data){
+        return this._http.post('/api/collections/'+id+'/delete/product', data);
+    }
+    
+    deleteCollection(id){
+        return this._http.delete('/api/collections/'+id+'/delete');
+    }
 }

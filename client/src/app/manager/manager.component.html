@@ -29,6 +29,15 @@
 </div>
 <br>
 <h2>Hidden Products (DMCA Violation)</h2>
+<div *ngFor = "let product of products">
+    <div *ngIf = "product.hidden">
+      <ul><li>
+        Product: {{product.name}}<br>
+        In stock: {{product.quantity}}<br> 
+        <input type = "submit" value = "Restore Product" [id] = "product._id" (click) = "restoreProduct($event)">
+      </li></ul>
+    </div>
+</div>
 <br>
 <h2>Implenting DMCA Notice & Takedown Policy</h2>
 <p>Any user of this site may file a takedown request, infringement notice, or dispute claim. This claim is filed under the /DMCA section of The Bakery's site.

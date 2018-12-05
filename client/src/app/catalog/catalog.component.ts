@@ -24,6 +24,7 @@ export class CatalogComponent {
   users;
   edit = false;
   del = false;
+  collections;
 
   constructor(private _dataService: DataService, private _authService: AuthService) {
      this.getProducts();
@@ -32,6 +33,7 @@ export class CatalogComponent {
      this.getUsers();
      this.edit = false;
      this.del = false;
+     this.getCollections();
   }
   
   getUsers(){
@@ -62,26 +64,23 @@ export class CatalogComponent {
       err => console.error(err));
   }
   
-   showAddComment() {
-    var x = document.getElementById("comment");
-    if (x.style.display === "none") {
-        x.style.display = "block";
-    } else {
-        x.style.display = "none";
-    }
-  }
-
  //return one product
   getProductItem(id){
     this._dataService.getProductItem(id).subscribe(
     data => { this.prod = data},
     err => console.error(err));
     
-  };
+  }
+  
+  getCollections(){
+    this._dataService.getCollections()
+    .subscribe(data => { this.collections = data},
+      res => console.log(res));
+  }
   
   onClickID(event, comment: String, rating: Number) {
     var user = firebase.auth().currentUser;
-    var tempComment = encode(comment);
+    var tempComment = this.encodeHTML(comment);
 
     if (user) {
       var target = event.target || event.srcElement || event.currentTarget;
@@ -159,7 +158,8 @@ export class CatalogComponent {
                //exit for loop to prevent cart quantity from incrementing more than once
           }
           
-      }  else if (cartAdd <= prodQuant){
+      }  
+      if (cartAdd <= prodQuant){
             var data = {
               productID: value,
               username: firebase.auth().currentUser.email,
@@ -180,8 +180,10 @@ export class CatalogComponent {
       var idAttr = target.attributes.id;
       var value = idAttr.value;
       
+      var temp = this.encodeHTML(newName);
+      
       var data = {
-        name: newName
+        name: temp
       };
       
       this._dataService.updateProduct(value, data)
@@ -208,8 +210,10 @@ export class CatalogComponent {
       var idAttr = target.attributes.id;
       var value = idAttr.value;
       
+      var temp = this.encodeHTML(newDescrip);
+      
       var data = {
-        descrip: newDescrip
+        descrip: temp
       };
       
       this._dataService.updateProduct(value, data)
@@ -266,7 +270,22 @@ export class CatalogComponent {
       
     }
     
-    encode(e){
+    addToCollection(event, name){
+      console.log(name);
+      var target = event.target || event.srcElement || event.currentTarget;
+      var idAttr = target.attributes.id;
+      var value = idAttr.value;
+      
+      var data = {
+        prodName: name
+      };
+      
+      this._dataService.collectionProducts(value, data)
+      .subscribe(res => console.log(res),
+                err => console.error(err));
+    }
+    
+    encodeHTML(e){
       return e.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
     }
     
