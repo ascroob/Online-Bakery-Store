@@ -1,0 +1,68 @@
+<h2>Registered Users</h2>
+<br>
+<div *ngFor="let user of users" >
+    User: {{user.username}}  -  Manager Privileges: {{user.manager}} <br>
+    <input type="button" value="Set as Manager" [id]="user._id" (click)="setManager($event)">
+    <input type="button" value="Revoke Manager Privileges" [id]="user._id" (click)="removeManager($event)"><br><br>
+</div>
+
+<h2>Products</h2>
+<h4>Add Product</h4>
+<form>
+    Product Name: <input type="text" id="name" /><br>
+    Product Price: <input type="text" id="price" /><br>
+    Description: <input type = "text" id = "descrip"/><br>
+    Quantity in Stock: <input type="text" id="quantity" /><br>
+    <input type="button" value="Add Product" (click)="addProduct()">
+</form>
+
+<h2>Hidden Comments</h2>
+
+<div *ngFor = "let comment of comments">
+    <div *ngIf = "comment.hidden">
+      <ul><li>
+        Comment: {{comment.comment}}<br>
+        Comment made by user: {{comment.username}}<br> 
+        <input type = "submit" value = "Restore Comment" [id] = "comment._id" (click) = "restoreComment($event)">
+      </li></ul>
+    </div>
+</div>
+<br>
+<h2>Hidden Products (DMCA Violation)</h2>
+<br>
+<h2>Implenting DMCA Notice & Takedown Policy</h2>
+<p>Any user of this site may file a takedown request, infringement notice, or dispute claim. This claim is filed under the /DMCA section of The Bakery's site.
+    All claims submitted by users are posted on this page, under the section "DMCA Notices". Following are the steps which should be taken by a manager when there are unresolved claims present:</p>
+    <ul>
+        <li>Takedown requests: If the takedown request is reasonable and requests for a comment or product to be taken down from the site for reasons such as profanity or irrelevance, please remove the comment/product.</li>
+        <li>Infringement notices: Look into the user's infringment claim. If we are in fact infringing upon their claimed copyright, remove the comment/product.</li>
+        <li>Dispute claim: If there is a dispute claim regarding a takedown request or infringement notice, contact the user for more information with their provided email. Restore any comment/product if the dispute is proved.</li>
+        <li>After any of these claims, contact the user with the provided email explaining which comment/product was removed or restored.</li>
+        <li>When a claim has been handled, mark as "resolved" using the resolved button below the request.</li>
+        <li>To send a takedown notice, email the user at the email provided. In the "DMCA Takedown Notice" section below, mark the notice as sent. A claim is not fully resolved until this email is sent.</li>
+        <li>To update the DMCA Policy statement, click the update button on the /DMCA page and submit the updated statement. It will automatically be posted.</li>
+    </ul>
+<br>
+<h2>DMCA Notices</h2>
+<div *ngFor = "let dmca of dmcas">
+    <ul><li>
+        Claim ID: {{dmca._id}}<br>
+        Request made by: {{dmca.name}}<br>
+        Contact information: {{dmca.email}}<br>
+        Copyright Owner: {{dmca.copyright}}<br>
+        Type of Violation: {{dmca.violation}}<br>
+        Complaint: {{dmca.complaint}}<br>
+        Resolved? {{dmca.resolved}}<br>
+        <input type = "submit" value = "Resolve" [id] = "dmca._id" (click) = "resolve($event)">
+    </li></ul>
+</div>
+<br>
+<h2>Send a DMCA Takedown Notice</h2>
+<div *ngFor = "let dmca of dmcas">
+    <ul><li>
+        Claim ID: {{dmca._id}}<br>
+        Notice Sent? {{dmca.notice}}<br>
+        <input type = "submit" value = "Email Sent" [id] = "dmca._id" (click) = "notice($event)">
+    </li></ul>
+</div>
+<br><br><br>

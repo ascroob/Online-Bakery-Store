@@ -1,0 +1,42 @@
+<br>
+<h1 align = "center">The Bakery DMCA Notice <br>and Takedown Procedure</h1>
+<br>
+<p align = "left">
+The Bakery supports the protection of intellectual property and asks their users to do the same. It is our policy to expeditiously respond to clear notices of alleged copyright infringement that comply with the United States Digital Millennium Copyright Act (“DMCA”), the text of which can be found at the U.S. Copyright Office website, https://www.copyright.gov.
+<br><br>
+It is expected that all users of any part of The Bakery will comply with applicable copyright laws. If, however, we receive proper notification of claimed copyright infringement, our response to such notices will include removing or disabling access to material claimed to be the subject of infringing activity and/or terminating the user’s account.
+<br><br>
+Please use the following form to report content on The Bakery that you believe violates or infringes your copyright. If you are not sure if copyright laws protect the material, we suggest that you first contact a lawyer.
+</p>
+
+<br>
+<h3>Send a DMCA Request, Log, or Dispute</h3>
+    <div>
+         Who owns the copyright? <select  name = "owner" [(ngModel)]="owner">
+            <option value="I own the copyright">I own the copyright</option>
+            <option value="Someone Else owns the copyright">Someone Else owns the copyright</option>
+            <option value="NA">N/A</option>
+          </select> 
+        </div>
+        <br>
+    <h4>Your Contact Information</h4>
+    <input type = "text" value = "name" placeholder = "Your Name" [(ngModel)] = "name"><br><br>
+    <input type = "text" value = "email" placeholder = "Your Email" [(ngModel)] = "email">
+    <br>
+    <h4>Identify the Violation</h4>
+    <div>
+         What kind of violation are you filing? <select  name = "violation" [(ngModel)]="violation">
+            <option value="takedown request">Takedown Request</option>
+            <option value="infringement notice">Infringement Notice</option>
+            <option value="dispute claim">Dispute Claim</option>
+          </select>
+        </div>
+    <br>
+    <h4>Explain The Violation</h4>
+    <p>Please provide us with as many details as possible. What comment/product is in question? What about the comment/product requires a takedown request, infringement notive or dispute claim?</p>
+    <textarea rows = "4" cols = "50" name="complaint" [(ngModel)] = "complaint">Enter complaint here.</textarea>
+    <br><br>
+    <input type = "submit" value = "Submit Request" (click) = "logDmca(owner, name, email, violation, complaint)">
+          
+          
+<br><br><br><br><br><br><br>

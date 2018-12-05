@@ -60,6 +60,11 @@ exports.cart_amount = function (req, res, next) {
 exports.cart_delete = function (req, res, next) {
     Cart.findByIdAndRemove(req.params.id, function (err) {
         if (err) return next(err);
-        res.send('Deleted successfully!');
+    })
+};
+
+exports.cart_delete_all = function (req, res, next) {
+    Cart.deleteMany({username: {$in: req.body.username}}, function (err) {
+        if (err) return next(err);
     })
 };

@@ -21,8 +21,13 @@ export class DataService {
    }
    
    getCart(){
-      // console.log('getCart'+ email);
        return this._http.get('api/cart/all');
+   }
+   
+   getUsers(){
+       console.log('get users');
+       return this._http.get('api/users/all');
+       
    }
    
    addComment(data){
@@ -56,5 +61,56 @@ export class DataService {
   
     deleteCartItem(id){
         return this._http.delete('api/cart/'+id+'/delete');
+    }
+    
+    deleteCart(username){
+        return this._http.delete('api/cart/delete/all', username);
+    }
+    
+    updateManager(id, value){
+        return this._http.put('api/users/manager/update/'+id, value)
+    }
+    
+    addProduct(data){
+        return this._http.post('api/products/create', data);
+    }
+    
+    updateProduct(id, data){
+        return this._http.put('api/products/'+id+'/update', data);
+    }
+    
+    deleteProduct(id){
+        return this._http.delete('api/products/'+id+'/delete');
+    }
+    
+    hideComment(id){
+        return this._http.put('api/comments/'+id+'/hide');
+    }
+    
+    restoreComment(id){
+        return this._http.put('api/comments/'+id+'/restore');
+    }
+    getPrivacies(){
+        return this._http.get('api/privacy/all');
+    }
+    
+    updatePrivacy(id, data){
+        return this._http.put('api/privacy/'+id+'/edit', data);
+    }
+    
+    createDMCA(data){
+        return this._http.post('api/dmca/create', data);
+    }
+    
+    getDmcas(){
+        return this._http.get('api/dmca/all');
+    }
+    
+    resolveDmca(id){
+        return this._http.put('api/dmca/'+id+'/resolve')
+    }
+    
+    dmcaNotice(id){
+        return this._http.put('api/dmca/'+id+'/notice')
     }
 }

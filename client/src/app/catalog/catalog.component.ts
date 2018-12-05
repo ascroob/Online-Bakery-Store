@@ -21,27 +21,23 @@ export class CatalogComponent {
   comments;
   carts;
   prod;
+  users;
+  edit = false;
+  del = false;
 
   constructor(private _dataService: DataService, private _authService: AuthService) {
-      //  this._dataService.getProducts()
-        //.subscribe(res => this.products = res);
      this.getProducts();
      this.getComments();
      this.getCart();
+     this.getUsers();
+     this.edit = false;
+     this.del = false;
   }
   
-  sort(){
-    
-    var replace = this.products;
-    for (var i = (replace.length-1); i >=0; i--){
-      for (var j = 1; j<=i; j++){
-        if(replace[j-1].purchased<replace[j].purchased){
-          var temp = replace[j-1];
-          replace[j-1]=replace[j];
-          replace[j]=temp;
-        }
-      }
-    }
+  getUsers(){
+    this._dataService.getUsers().subscribe(
+      data => { this.users = data},
+      err => console.error(err));
   }
   
   getProducts() {
@@ -63,9 +59,7 @@ export class CatalogComponent {
   getCart(){
     this._dataService.getCart().subscribe(
       data => { this.carts = data},
-      err => console.error(err),
-      () => console.log(this.carts)
-    );
+      err => console.error(err));
   }
   
    showAddComment() {
@@ -75,7 +69,7 @@ export class CatalogComponent {
     } else {
         x.style.display = "none";
     }
-}
+  }
 
  //return one product
   getProductItem(id){
@@ -83,10 +77,11 @@ export class CatalogComponent {
     data => { this.prod = data},
     err => console.error(err));
     
-  }
+  };
   
   onClickID(event, comment: String, rating: Number) {
     var user = firebase.auth().currentUser;
+    var tempComment = encode(comment);
 
     if (user) {
       var target = event.target || event.srcElement || event.currentTarget;
@@ -96,7 +91,8 @@ export class CatalogComponent {
       var data = {
         productID: value,
         username: firebase.auth().currentUser.email,
-        comment: comment,
+        comment: tempComment,
+        hidden: false,
         rating: rating
     };
     
@@ -113,7 +109,13 @@ export class CatalogComponent {
     }
   }
   
-  
+    setEdit(){//show options to edit a product
+      this.edit = true;
+    }
+    
+    setDel(){//show option to delete a product
+      this.del = true;
+    }
   
   onClickCart(event, cartAdd: Number, prodQuant: Number){
     var user = firebase.auth().currentUser;
@@ -122,11 +124,6 @@ export class CatalogComponent {
       var target = event.target || event.srcElement || event.currentTarget;
       var idAttr = target.attributes.id;
       var value = idAttr.value;
-      
-      this.getProductItem(value);
-      var quan = this._dataService.getProductQuantity(value).subscribe(
-          data => console.log(data)
-        );
       /**
       *check all items in the cart where the username matches the
       * email of the current user.
@@ -161,7 +158,8 @@ export class CatalogComponent {
               }
                //exit for loop to prevent cart quantity from incrementing more than once
           }
-            else {
+          
+      }  else if (cartAdd <= prodQuant){
             var data = {
               productID: value,
               username: firebase.auth().currentUser.email,
@@ -172,14 +170,105 @@ export class CatalogComponent {
             .subscribe(res => console.log(res),
                 err => console.error(err));
             
-            break;
-          }
-          
-    } 
-    } else {
-      alert('Please log in to add items to cart.');
-  } 
-}
-
+          } else alert('We do not have enough of this product left in stock. Please choose a smaller amount to add to your cart.');
+      
+    } else  alert('Please log in to add items to cart.');
+   
+  }
+    updateName(event, newName){
+      var target = event.target || event.srcElement || event.currentTarget;
+      var idAttr = target.attributes.id;
+      var value = idAttr.value;
+      
+      var data = {
+        name: newName
+      };
+      
+      this._dataService.updateProduct(value, data)
+      .subscribe(res => console.log(res),
+                err => console.error(err));
+    }
+    
+    updatePrice(event, newPrice){
+      var target = event.target || event.srcElement || event.currentTarget;
+      var idAttr = target.attributes.id;
+      var value = idAttr.value;
+      
+      var data = {
+        price: newPrice
+      };
+      
+      this._dataService.updateProduct(value, data)
+      .subscribe(res => console.log(res),
+                err => console.error(err));
+    }
+    
+    updateDescrip(event, newDescrip){
+      var target = event.target || event.srcElement || event.currentTarget;
+      var idAttr = target.attributes.id;
+      var value = idAttr.value;
+      
+      var data = {
+        descrip: newDescrip
+      };
+      
+      this._dataService.updateProduct(value, data)
+      .subscribe(res => console.log(res),
+                err => console.error(err));
+    }
+    
+    updateQuant(event, newQuant){
+      var target = event.target || event.srcElement || event.currentTarget;
+      var idAttr = target.attributes.id;
+      var value = idAttr.value;
+      
+      var data = {
+        quantity: newQuant
+      };
+      
+      this._dataService.updateProduct(value, data)
+      .subscribe(res => console.log(res),
+                err => console.error(err));
+    }
+    
+    hideComment(event){
+      var target = event.target || event.srcElement || event.currentTarget;
+      var idAttr = target.attributes.id;
+      var value = idAttr.value;
+      
+      this._dataService.hideComment(value)
+      .subscribe(res => console.log(res),
+                err => console.error(err));
+    }
+    
+    deleteProduct(event){
+      var target = event.target || event.srcElement || event.currentTarget;
+      var idAttr = target.attributes.id;
+      var value = idAttr.value;
+      
+      this._dataService.deleteProduct(value)
+      .subscribe(res => console.log(res),
+                err => console.error(err));
+    }
+    
+    hideProduct(event){
+      var target = event.target || event.srcElement || event.currentTarget;
+      var idAttr = target.attributes.id;
+      var value = idAttr.value;
+      
+      var data = {
+        hidden: true
+      };
+      
+      this._dataService.updateProduct(value, data)
+      .subscribe(res => console.log(res),
+                err => console.error(err));
+      
+    }
+    
+    encode(e){
+      return e.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
+    }
+    
 
 }

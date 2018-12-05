@@ -6,6 +6,9 @@ const product = require('./routes/product.route'); // Imports routes for the pro
 const user = require('./routes/user.route'); // Imports routes for users
 const comment = require('./routes/comment.route'); // Imports routes for comments
 const cart = require('./routes/cart.route'); // Imports routes for comments
+const collection = require('./routes/collection.route');
+const privacy = require('./routes/privacy.route');
+const dmca = require('./routes/dmca.route');
 const app = express();
 
 // Set up mongoose connection
@@ -23,6 +26,9 @@ app.use('/api/products', product);
 app.use('/api/users', user);
 app.use('/api/comments', comment);
 app.use('/api/cart', cart);
+app.use('/api/collections', collection);
+app.use('/api/privacy', privacy);
+app.use('/api/dmca', dmca);
 
 let port = 8081;
 

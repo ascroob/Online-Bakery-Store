@@ -1,5 +1,12 @@
 <h1>Home</h1>
+
 <h4>About us</h4>
 <p>About blurb...what this site offers</p>
 
 <app-product-data></app-product-data>
+
+<input type="button" value="Manager" (click) = "managerCheck()" href="/manager">
+<div *ngIf = "manager">
+    <input type="button" value = "Manager Privileges" routerLink="/manager" routerLinkActive="active">
+</div>
+

@@ -1,5 +1,11 @@
- <app-login></app-login>
+<app-login></app-login>
 <app-layout>
+    <div *ngFor = "let user of users">
+    <div *ngIf = "user.username == (_authService.user | async)?.email && user.manager == true">
+        Welcome, manager {{user.username}}
+    </div>
+    </div>
+    
     <router-outlet></router-outlet>
     
 </app-layout>

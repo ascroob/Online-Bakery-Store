@@ -20,6 +20,7 @@ export class CartComponent implements OnInit {
   products;
   _email;
   clear = false;
+  total = 0;
   
   constructor(private _dataService: DataService, private _authService: AuthService) {
     
@@ -74,7 +75,7 @@ export class CartComponent implements OnInit {
             _id: id,
             amount: 1
         };
-              
+        
          //update cart quantity of this item
          this._dataService.cartIncrement(cart)
             .subscribe(res => console.log(res),
@@ -85,5 +86,27 @@ export class CartComponent implements OnInit {
        this._dataService.deleteCartItem(id)
             .subscribe(res => console.log(res),
             err => console.error(err));
+   }
+   
+   removeAll(event){//delete all cart items for this user
+    var email = firebase.auth().currentUser.email;
+        var user = {
+            username: email
+        };
+       this._dataService.deleteCart(user)
+            .subscribe(res => console.log(res),
+            err => console.error(err));
+   }
+   
+   save(){
+       alert('The items in your cart have been saved!');
+   }
+   
+   cartTotal(){
+       for (var i = 0; i<this.carts.length; i++){
+           if (this.carts[i].username == _email){
+          //     total += (this.carts[i].amount)*()
+           }
+       }
    }
 }

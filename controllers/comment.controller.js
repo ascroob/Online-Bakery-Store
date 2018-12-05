@@ -12,6 +12,7 @@ exports.comment_create = function (req, res, next) {
             productID: req.body.productID,
             username: req.body.username,
             comment: req.body.comment,
+            hidden: req.body.hidden,
             rating: req.body.rating
         }
     );
@@ -38,6 +39,20 @@ exports.comment_findAll = function (req, res, next) {
 
 exports.comment_findItem = function (req, res, next) {
     Comment.find({}, function (err, results){
+       console.log(results); 
+       res.send(results);
+    });
+};
+
+exports.comment_hide = function (req, res, next) {
+    Comment.findByIdAndUpdate(req.params.id, {$set: {hidden: true}}, function (err, results){
+       console.log(results); 
+       res.send(results);
+    });
+};
+
+exports.comment_restore = function (req, res, next) {
+    Comment.findByIdAndUpdate(req.params.id, {$set: {hidden: false}}, function (err, results){
        console.log(results); 
        res.send(results);
     });

@@ -7,7 +7,6 @@ exports.test = function (req, res) {
 };
 
 exports.user_create = function (req, res, next) {
-    console.log('post');
     let user = new User(
         {
             username: req.body.username,
@@ -21,9 +20,8 @@ exports.user_create = function (req, res, next) {
             console.log(err);
             return next(err);
         }
+        res.send(user);
     })
-    
-    res.send ('User successfully created.')
 }; //create new user using the data coming from a POST request and save to database.
 
 //Retrieve and return all notes from the database.
@@ -32,5 +30,16 @@ exports.user_findAll = function (req, res, next) {
     User.find({}, function (err, results){
        console.log(results); 
        res.send(results);
+    });
+};
+
+exports.user_update_manager = function (req, res, next){
+    console.log(req.body);
+    User.findByIdAndUpdate(req.params.id, {$set: {manager: req.body.manager}}, function (err, user) {
+        if (err) {
+            console.log(err);
+            return next(err);
+        }
+        res.send(user);
     });
 };

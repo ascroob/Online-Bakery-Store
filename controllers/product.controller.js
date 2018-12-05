@@ -27,8 +27,8 @@ exports.product_create = function (req, res, next) {
             price: req.body.price, 
             descrip: req.body.descrip,
             quantity: req.body.quantity,
-            purchased: req.body.purchased
-            
+            purchased: req.body.purchased,
+            hidden: req.body.hidden
         }
     );
 
@@ -45,8 +45,6 @@ exports.product_create = function (req, res, next) {
 exports.product_details = function (req, res, next) {
     console.log('get');
     Product.findById(req.params.id, function (err, product) {
-        
-        res.send(product);
     });
 };
 
@@ -83,6 +81,5 @@ exports.product_update_rating = function (req, res, next) {
 exports.product_delete = function (req, res, next) {
     Product.findByIdAndRemove(req.params.id, function (err) {
         if (err) return next(err);
-        res.send('Deleted successfully!');
     })
 };

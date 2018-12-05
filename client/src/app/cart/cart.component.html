@@ -5,6 +5,8 @@
     <input type="button" value="Clear Cart" id="clear" (click)="clearCart()">
     <div *ngIf = "clear">
         <p>Are you sure you want to clear items from the cart?</p>
+         <input type="button" value="Yes, clear cart" id="clear" (click)="removeAll()">
+        <input type="button" value="No, save my items" id="save" (click)="save()">
     </div>
     
 
@@ -28,6 +30,8 @@
         </ng-container>
     </ul>
 </div>
+<br><br>
+<h4>Cart Total: </h4>
 
 
 <br>

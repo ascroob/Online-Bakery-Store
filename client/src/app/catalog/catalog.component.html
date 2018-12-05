@@ -4,6 +4,7 @@
 
 <mat-accordion>
  <div *ngFor="let product of products " >
+   <div *ngIf = "!product.hidden">
 
       <mat-expansion-panel>
             <mat-expansion-panel-header>
@@ -15,10 +16,30 @@
               </mat-panel-description>
             </mat-expansion-panel-header>
             
+        <div  *ngFor = "let user of users">
+            <div *ngIf = "user.username == (_authService.user | async)?.email && user.manager == true">
+                <input type = "submit" value = "Hide Product" [id] = "product._id" (click) = "hideProduct($event)">
+                <input type="button" value = "Delete Item" [id] = "product._id" (click) = "setDel()">
+                <div *ngIf = "del">
+                  Are you sure you want to delete this item permanently?
+                  <input type = "submit" value = "Yes, delete item." [id] = "product._id" (click) = "deleteProduct($event)">
+                </div>
+                <input type="button" value = "Edit Item" [id] = "product._id" (click) = "setEdit()"><br><br>
+                <div *ngIf = "edit">
+                  Updated Name: <input type = "text" name = "name" [(ngModel)] = "newName"><input type = "submit" [id] = "product._id" value = "Update Name" (click) = "updateName($event, newName)">
+                  Updated Price: <input type = "text" name = "price" [(ngModel)] = "newPrice"><input type = "submit" [id] = "product._id" value = "Update Price" (click) = "updatePrice($event, newPrice)"><br><br>
+                  Updated Description: <input type = "text" name = "descrip" [(ngModel)] = "newDescrip"><input type = "submit" [id] = "product._id" value = "Update Description" (click) = "updateDescrip($event, newDescrip)">
+                  Updated Quantity In Stock: <input type = "text" name = "quantity" [(ngModel)] = "newQuant"><input type = "submit" [id] = "product._id" value = "Update Quant" (click) = "updateQuant($event, newQuant)"><br><br>
+                  
+                </div>
+            </div>
+        </div>   
+        <br><br>    
         <p>Product Details</p><br>
         
         In stock: {{product.quantity}}<br>
-        Total sold: {{product.purchased}}<br><br>
+        Total sold: {{product.purchased}}<br>
+        Price: ${{product.price}}<br><br>
           Amount: <select  name = "cartAdd" [(ngModel)]="cartAdd">
             <option value="1">1</option>
             <option value="2">2</option>
@@ -33,29 +54,24 @@
           </select><p>   </p>
           
           <input type="submit" value="Add to Cart" [id] = "product._id" (click) = "onClickCart($event, cartAdd, product.quantity)"> 
-  
-          
-          <br>
+          <br><br>
         <ng-container *ngFor = "let comment of comments ">
           <div  *ngIf = "product._id == comment.productID"> <!--need async as users-->
-              <div  style="width: 45%;
-               float: left;
-               background-color:red
-               white-space: nowrap;
-               overflow:hidden !important;
-               text-overflow: ellipsis;">
-             
-            Comment by: {{comment.username}}<br>
-            Product Rating: {{comment.rating}}<br>
-            {{comment.comment}}<br><br>
-          </div>
+            <div *ngIf = "!comment.hidden">
+              Comment by: {{comment.username}}<br>
+              Product Rating: {{comment.rating}}<br>
+              {{comment.comment}}<br>
+              <div  *ngFor = "let user of users">
+                <div *ngIf = "user.username == (_authService.user | async)?.email && user.manager == true">
+                  <input type = "submit" value = "Hide Comment" [id] = "comment._id" (click) = "hideComment($event)">
+                </div>
+              </div>
+            </div>
           </div>
         </ng-container>
         <br>
-        <button type="button" (click) = "showAddComment()">Add Comment</button>
-        <br><br>
         <form >
-        <div  >
+        <div>
           Comment: <input type="text" name="comment" [(ngModel)]="comment"/>
           Rating: <select  name = "rating" [(ngModel)]="rating">
             <option value="1">1</option>
@@ -71,6 +87,7 @@
               
     </mat-expansion-panel>
     <br>
+    </div>
   </div>
   </mat-accordion>
   <br><br>

@@ -6,7 +6,8 @@ let ProductSchema = new Schema({
     price: {type: Number, required: true},
     descrip: {type: String, required: true, max: 100},
     quantity: {type: Number, required: true},
-    purchased: {type: Number, requried: true, min:0}
+    purchased: {type: Number, required: true, min:0},
+    hidden: {type: Boolean, required: true}
 });
 
 

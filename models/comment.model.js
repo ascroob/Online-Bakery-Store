@@ -5,6 +5,7 @@ let CommentSchema = new Schema({
     productID: {type: String, required: true},
     username: {type: String, required: true, max: 100},
     comment: {type: String, required: true, max: 100},
+    hidden: {type: Boolean, required: true},
     rating: {type: Number}
 });
 

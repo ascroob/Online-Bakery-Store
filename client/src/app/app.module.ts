@@ -33,6 +33,9 @@ import {CdkTableModule} from '@angular/cdk/table';
 import {CdkTreeModule} from '@angular/cdk/tree';
 import { MatMenuModule, MatButtonModule, MatIconModule, MatCardModule, MatSidenavModule } from '@angular/material';
 import { ListsComponent } from './lists/lists.component';
+import { ManagerComponent } from './manager/manager.component';
+import { PrivacyComponent } from './privacy/privacy.component';
+import { DmcaComponent } from './dmca/dmca.component';
 
 
 const appRoutes: Routes = [
@@ -59,6 +62,21 @@ const appRoutes: Routes = [
     path: 'lists',
     component: ListsComponent,
     data: { title: 'Collections' }
+  },
+  {
+    path: 'manager',
+    component: ManagerComponent,
+    data: {title: 'Manager'}
+  },
+  {
+    path: 'privacy',
+    component: PrivacyComponent,
+    data: {title: 'Privacy'}
+  },
+  {
+    path: 'dmca',
+    component: DmcaComponent,
+    data: {title: 'DMCA'}
   }
 ];
 
@@ -71,7 +89,10 @@ const appRoutes: Routes = [
     ProductDataComponent,
     CatalogComponent,
     CartComponent,
-    ListsComponent
+    ListsComponent,
+    ManagerComponent,
+    PrivacyComponent,
+    DmcaComponent
   ],
   imports: [
     RouterModule.forRoot(

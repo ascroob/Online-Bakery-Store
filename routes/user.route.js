@@ -8,5 +8,6 @@ const user_controller = require('../controllers/user.controller');
 router.get('/test', user_controller.test);
 router.post('/create', user_controller.user_create);
 router.get('/all', user_controller.user_findAll);
+router.put('/manager/update/:id', user_controller.user_update_manager);
 
 module.exports = router;

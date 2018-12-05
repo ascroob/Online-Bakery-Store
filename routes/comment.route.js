@@ -8,6 +8,7 @@ const comment_controller = require('../controllers/comment.controller');
 router.get('/test', comment_controller.test);
 router.post('/create', comment_controller.comment_create);
 router.get('/all', comment_controller.comment_findAll);
-//router.put ('/add', comment_controller.comment_add)
+router.put ('/:id/hide', comment_controller.comment_hide);
+router.put ('/:id/restore', comment_controller.comment_restore);
 
 module.exports = router;
