@@ -23,6 +23,10 @@ export class CartComponent implements OnInit {
   total = 0;
   viewTotal = false;
   purch = false;
+  receipt = false;
+  prods[];
+  amounts[];
+  prices[];
   
   constructor(private _dataService: DataService, private _authService: AuthService) {
     this.getCart();
@@ -30,6 +34,7 @@ export class CartComponent implements OnInit {
     this.clear = false;
     this.viewTotal = false;
     this.purch = false;
+    this.receipt = false;
     
   }
   
@@ -144,16 +149,18 @@ export class CartComponent implements OnInit {
    }
    
    purchaseItems(){
+       this.receipt = true;
        for (var j = 0; j < this.carts.length; j++){
             if (this.carts[j].username == firebase.auth().currentUser.email){
                 console.log('test');
                 for (var i = 0; i < this.products.length; i++){
                     if (this.products[i]._id == this.carts[j].productID) {
                        if (this.products[i].quantity > this.carts[j].amount){
-                         this._dataService.deleteCartItem(this.carts[j]._id)
-                            .subscribe(res => console.log(res),
-                            err => console.error(err));
-                            
+                        /*  //store item name, quant, and price in arrays for receipt
+                            this.prods.push(this.products[i].name);
+                            this.amounts.push(this.carts[j].amount);
+                            this.price.push(this.carts[j].price * this.carts[j].amount);
+                         */   
                             var temp1 = this.products[i].quantity - this.carts[j].amount;
                             var temp2 = this.products[i].purchased + this.carts[j].amount;
                             var data = {
@@ -162,9 +169,17 @@ export class CartComponent implements OnInit {
                             };
                             var id = this.products[i]._id;
                             
+                            console.log(this.prods);
+                            console.log(this.amounts);
+                            console.log(this.prices);
+                            
                             this._dataService.updateProduct(id, data)
                             .subscribe(res => console.log(res),
                                 err => console.error(err));
+                                
+                            this._dataService.deleteCartItem(this.carts[j]._id)
+                            .subscribe(res => console.log(res),
+                            err => console.error(err));
                             break;
                     }else {
                         alert ('Oops! Looks like there is not any more of this product left in stock to add to your cart.');
