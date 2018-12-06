@@ -1,7 +1,6 @@
 <h2>All Items</h2>
 <br>
 
-
 <mat-accordion>
  <div *ngFor="let product of products " >
    <div *ngIf = "!product.hidden">
@@ -38,7 +37,8 @@
         <p>Product Details</p><br>
         In stock: {{product.quantity}}<br>
         Total sold: {{product.purchased}}<br>
-        Price: ${{product.price}}<br><br>
+        Price: ${{product.price}}<br>
+        Average Rating: {{product.rating}}<br><br>
           Amount: <select  name = "cartAdd" [(ngModel)]="cartAdd">
             <option value="1">1</option>
             <option value="2">2</option>
@@ -52,7 +52,7 @@
             <option value="10">10</option>
           </select><p>   </p>
           
-          <input type="submit" value="Add to Cart" [id] = "product._id" (click) = "onClickCart($event, cartAdd, product.quantity)"> 
+          <input type="submit" value="Add to Cart" [id] = "product._id" (click) = "onClickCart($event, cartAdd, product.quantity, product.price)"> 
           <br><br>
         <ng-container *ngFor = "let comment of comments ">
           <div  *ngIf = "product._id == comment.productID"> <!--need async as users-->

@@ -1,13 +1,23 @@
+<div *ngFor = "let user of users">
+    <div *ngIf = "user.username == (_authService.user | async)?.email && user.manager == true">
+        <input type = "submit" value = "Edit DMCA" (click) = "editDmca()">
+    </div>
+</div>
+
 <br>
 <h1 align = "center">The Bakery DMCA Notice <br>and Takedown Procedure</h1>
-<br>
-<p align = "left">
-The Bakery supports the protection of intellectual property and asks their users to do the same. It is our policy to expeditiously respond to clear notices of alleged copyright infringement that comply with the United States Digital Millennium Copyright Act (“DMCA”), the text of which can be found at the U.S. Copyright Office website, https://www.copyright.gov.
-<br><br>
-It is expected that all users of any part of The Bakery will comply with applicable copyright laws. If, however, we receive proper notification of claimed copyright infringement, our response to such notices will include removing or disabling access to material claimed to be the subject of infringing activity and/or terminating the user’s account.
-<br><br>
-Please use the following form to report content on The Bakery that you believe violates or infringes your copyright. If you are not sure if copyright laws protect the material, we suggest that you first contact a lawyer.
-</p>
+
+<div *ngFor = "let privacy of privacies">
+    <div *ngIf = "privacy.section == 'DMCA'">
+         <div *ngFor = "let user of users">
+            <div *ngIf = "user.username == (_authService.user | async)?.email && user.manager == true && dmca">
+                <textarea rows="10" cols="50" [(ngModel)] = "newText" ></textarea>
+                <input type = "submit" value = "Edit Section" [id] = "privacy._id"  (click) = "editSection($event, newText)">
+            </div>
+        </div>
+        <p>{{privacy.text}}</p>
+    </div>
+</div>
 
 <br>
 <h3>Send a DMCA Request, Log, or Dispute</h3>

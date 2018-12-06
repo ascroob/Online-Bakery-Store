@@ -6,6 +6,9 @@
     
 
     <div *ngFor = "let privacy of privacies">
+        
+        <div *ngIf = "!(privacy.section =='DMCA')">
+            
         <h3>{{privacy.section}}</h3>
         <div *ngFor = "let user of users">
             <div *ngIf = "user.username == (_authService.user | async)?.email && user.manager == true && edit">
@@ -14,6 +17,9 @@
             </div>
         </div>
         <p>{{privacy.text}}</p>
+        
+        </div>
+        
     </div>
 
 <br><br>

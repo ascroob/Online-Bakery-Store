@@ -21,10 +21,13 @@ export class CartComponent implements OnInit {
   _email;
   clear = false;
   total = 0;
+  viewTotal = false;
   
   constructor(private _dataService: DataService, private _authService: AuthService) {
-    
+    this.getCart();
     this.getProducts();
+    this.clear = false;
+    this.viewTotal = false;
     
   }
   
@@ -53,6 +56,7 @@ export class CartComponent implements OnInit {
    this._dataService.getProducts().subscribe(
       data => { this.products = data},
       err => console.error(err));
+      
    }
    
    //decrement number of items of this cart item by 1
@@ -71,15 +75,40 @@ export class CartComponent implements OnInit {
    
    //increment cart value of this item by one if stock levels allow for it
    plus(event, id){
+      var target = event.target || event.srcElement || event.currentTarget;
+      var idAttr = target.attributes.id;
+      var value = idAttr.value;
+      
         var cart = {
             _id: id,
             amount: 1
         };
-        
-         //update cart quantity of this item
-         this._dataService.cartIncrement(cart)
-            .subscribe(res => console.log(res),
-            err => console.error(err));
+        //check stock levels
+        for (var j = 0; j < this.carts.length; j++){
+            if (this.carts[j]._id == id){
+                console.log(id);
+                console.log(value);
+                for (var i = 0; i < this.products.length; i++){
+                    if (this.products[i]._id == value) {
+                        console.log('test1');
+                       if (this.products[i].quantity > this.carts[j].amount){
+                        //update cart quantity of this item
+                        console.log('test');
+                        console.log(this.products[i].amount);
+                        console.log(this.carts[j].amount);
+                         this._dataService.cartIncrement(cart)
+                            .subscribe(res => console.log(res),
+                            err => console.error(err));
+                            break;
+                    }
+                    }else if (this.products[i]._id == value && this.products[i].amount >= (this.carts[j].amount)) {
+                        alert ('Oops! Looks like there is not any more of this product left in stock to add to your cart.');
+                        break;
+                    
+                    }
+                }
+            } 
+        }
    }
    
    remove(event, id){
@@ -88,12 +117,8 @@ export class CartComponent implements OnInit {
             err => console.error(err));
    }
    
-   removeAll(event){//delete all cart items for this user
-    var email = firebase.auth().currentUser.email;
-        var user = {
-            username: email
-        };
-       this._dataService.deleteCart(user)
+   removeAll(){//delete all cart items for this user
+       this._dataService.deleteCart()
             .subscribe(res => console.log(res),
             err => console.error(err));
    }
@@ -103,10 +128,14 @@ export class CartComponent implements OnInit {
    }
    
    cartTotal(){
+       this.viewTotal = true;
        for (var i = 0; i<this.carts.length; i++){
            if (this.carts[i].username == this._email){
-          //     total += (this.carts[i].amount)*()
+                var temp = (this.carts[i].amount)*(this.carts[i].price);
+                this.total +=temp;
            }
        }
+       
+       
    }
 }

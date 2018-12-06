@@ -28,7 +28,9 @@ exports.product_create = function (req, res, next) {
             descrip: req.body.descrip,
             quantity: req.body.quantity,
             purchased: req.body.purchased,
-            hidden: req.body.hidden
+            hidden: req.body.hidden,
+            rating: req.body.rating,
+            numRates: req.body.numRates
         }
     );
 

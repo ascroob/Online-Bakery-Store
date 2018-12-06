@@ -15,7 +15,10 @@ export class LoginComponent  {
   password: string;
   resend = false;
 
-  constructor(public authService: AuthService) { };
+  constructor(public authService: AuthService) {
+    this.resend = false;
+    
+  }
   
   setResend(){
     console.log('resend');
@@ -23,26 +26,31 @@ export class LoginComponent  {
     if (user){
       if (!user.emailVerified) this.resend = true;
     }
-    console.log(user);
-  };
+    console.log(user.email);
+    console.log(user.emailVerified);
+  }
+  
+  resendEmail(){
+    this.authService.resendEmail(this.email);
+  }
   
   signup() {
     var tempEmail = this.encodeHTML(this.email);
     var tempPass = this.encodeHTML(this.password);
     this.authService.signup(tempEmail, tempPass);
     this.email = this.password = '';
-  };
+  }
 
   login() {
     var tempEmail = this.encodeHTML(this.email);
     var tempPass = this.encodeHTML(this.password);
     this.authService.login(tempEmail, tempPass);
     this.email = this.password = '';    
-  };
+  }
 
   logout() {
     this.authService.logout();
-  };
+  }
   
    encodeHTML(e){
     return e.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');

@@ -63,8 +63,8 @@ export class DataService {
         return this._http.delete('api/cart/'+id+'/delete');
     }
     
-    deleteCart(username){
-        return this._http.delete('api/cart/delete/all', username);
+    deleteCart(){
+        return this._http.delete('api/cart/delete');
     }
     
     updateManager(id, value){

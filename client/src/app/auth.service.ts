@@ -30,23 +30,23 @@ export class AuthService {
                   active: true
                 };
                 
-                console.log('signup');
-                console.log(data);
-                console.log(email);
-                
-                this.createUser(data).subscribe(
+                this.createUser(data).subscribe(//add user to database - automatically set as not a manager (this can be changed in the application by a manager)
                   res => console.log(res),
                   err => console.error(err));
                 
-            }).catch((error) => {
+            })).catch((error) => {
                 alert('Sorry, that email is already registered with an account.');
-            }));
+            });
             
       
   }
   
   createUser(data){
     return this._http.post('api/users/create', data);
+  }
+  
+  resendEmail(email){
+     this.firebaseAuth.auth.currentUser.sendEmailVerification();
   }
   
   login(email: string, password: string) {

@@ -31,7 +31,11 @@
     </ul>
 </div>
 <br><br>
-<h4>Cart Total: </h4>
+<input type = "button" value = "Cart Total" (click) = "cartTotal()">
+<div *ngIf = "viewTotal">
+<h4>Cart Total: ${{total}}</h4> 
+</div>
+
 
 
 <br>

@@ -48,7 +48,7 @@ export class PrivacyComponent implements OnInit {
       var idAttr = target.attributes.id;
       var value = idAttr.value;
       
-      var temp = this.encodeHTML(this.newText);
+      var temp = this.encodeHTML(newText);
       
       var data = {
         text: temp

@@ -24,6 +24,8 @@
         
         In stock: {{product.quantity}}<br>
         Number Purchased: {{product.purchased}}<br><br>
+        Price: ${{product.price}}<br>
+        Average Rating: {{product.rating}}<br><br>
         
         <ng-container *ngFor = "let comment of comments">
           <div  *ngIf = "product._id == comment.productID"> <!--need async as users-->

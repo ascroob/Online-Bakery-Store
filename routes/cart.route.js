@@ -12,5 +12,6 @@ router.put('/update', cart_controller.cart_update);
 router.put('/amount/update', cart_controller.cart_amount);
 router.delete('/:id/delete', cart_controller.cart_delete);
 router.delete('/delete/all', cart_controller.cart_delete_all);
+router.delete('/delete', cart_controller.delete);
 
 module.exports = router;

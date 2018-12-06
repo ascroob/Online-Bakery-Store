@@ -7,7 +7,9 @@ let ProductSchema = new Schema({
     descrip: {type: String, required: true, max: 100},
     quantity: {type: Number, required: true},
     purchased: {type: Number, required: true, min:0},
-    hidden: {type: Boolean, required: true}
+    hidden: {type: Boolean, required: true},
+    rating: {type: Number, required: false},
+    numRates: {type: Number, required: false}
 });
 
 

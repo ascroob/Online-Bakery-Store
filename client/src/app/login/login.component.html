@@ -7,7 +7,7 @@
     Signup
   </button>
 
-  <button (click)="login(); setResend()" [disabled]="!email || !password">
+  <button (click)="login()" [disabled]="!email || !password">
     Login
   </button>
 </div>
@@ -15,6 +15,6 @@
 <button (click)="logout()" *ngIf="authService.user | async">
   Logout
 </button>
-<div *ngIf = "resend">
-    <button (click)="resend()" >Login</button>
-  </div>
+<button (click)="resendEmail()" *ngIf = "authService.user | async">
+  Resend Verification Email
+</button>

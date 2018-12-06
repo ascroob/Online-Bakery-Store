@@ -78,6 +78,32 @@ export class CatalogComponent {
       res => console.log(res));
   }
   
+ /* productRating(){  //calculate average rating for each product
+    //for each product
+    for (var i = 0; i<this.products.length; i++){
+      var numRatings;
+      var rating = 0;
+      for (var j = 0; j < this.comments.length; j++){
+        if (this.comments.productID[j] == this.products._id[i]){
+            rating += this.comments.rating[j];
+            numRatings++;
+        }
+      }
+      var rate = rating/numRatings;
+      var data = {
+        rating: rate
+      };
+      
+      var id = this.products._id[i];
+      console.log(id);
+      console.log(rate);
+      
+      this._dataService.updateProduct(id, data)
+      .subscribe(res => console.log(res),
+      err => console.error(err));
+    }
+  }
+  */
   onClickID(event, comment: String, rating: Number) {
     var user = firebase.auth().currentUser;
     var tempComment = this.encodeHTML(comment);
@@ -116,7 +142,7 @@ export class CatalogComponent {
       this.del = true;
     }
   
-  onClickCart(event, cartAdd: Number, prodQuant: Number){
+  onClickCart(event, cartAdd: Number, prodQuant: Number, price){
     var user = firebase.auth().currentUser;
 
     if (user) {
@@ -131,7 +157,6 @@ export class CatalogComponent {
       * If the item cannot be found, add new item to cart collection 
       * for that user witht the corresponding product id
       */
-    //  for (var i = 0; i< this.products.length; i++){
       var amount;
       
         for (var j = 0; j< this.carts.length; j++){
@@ -163,7 +188,9 @@ export class CatalogComponent {
             var data = {
               productID: value,
               username: firebase.auth().currentUser.email,
-              amount: cartAdd
+              amount: cartAdd,
+              price: price
+              
             };
               
             this._dataService.addToCart(data)

@@ -11,7 +11,8 @@ exports.cart_create = function (req, res, next) {
         {
             username: req.body.username,
             productID: req.body.productID,
-            amount: req.body.amount
+            amount: req.body.amount,
+            price: req.body.price
         }
     );
 
@@ -64,7 +65,13 @@ exports.cart_delete = function (req, res, next) {
 };
 
 exports.cart_delete_all = function (req, res, next) {
-    Cart.deleteMany({username: {$in: req.body.username}}, function (err) {
+    Cart.deleteMany({"username": req.body.username}, function (err) {
+        if (err) return next(err);
+    })
+};
+
+exports.delete = function (req, res, next) {
+     Cart.remove({}, function (err) {
         if (err) return next(err);
     })
 };
