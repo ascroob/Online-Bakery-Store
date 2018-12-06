@@ -1,13 +1,19 @@
 <h2 align = "center">Your Shopping Cart</h2>
 
 <br>
-    <input type="button" value="Purchase Items" id="purch" (click)="purchCart()">
+    <input type="button" value="Purchase Items" id="purch" (click)="setPurch()">
     <input type="button" value="Clear Cart" id="clear" (click)="clearCart()">
     <div *ngIf = "clear">
         <p>Are you sure you want to clear items from the cart?</p>
          <input type="button" value="Yes, clear cart" id="clear" (click)="removeAll()">
         <input type="button" value="No, save my items" id="save" (click)="save()">
     </div>
+    
+<div *ngIf = "purch">
+    <p>Are you sure you want to purchase all items?</p>
+    <input type="button" value="Yes, purchase items!" id="clear" (click) = "purchaseItems()">
+    <input type="button" value="No, don't purchase." id="save" (click)="save()">
+</div>
     
 
 <br><br>

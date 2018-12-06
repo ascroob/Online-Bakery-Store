@@ -22,16 +22,22 @@ export class CartComponent implements OnInit {
   clear = false;
   total = 0;
   viewTotal = false;
+  purch = false;
   
   constructor(private _dataService: DataService, private _authService: AuthService) {
     this.getCart();
     this.getProducts();
     this.clear = false;
     this.viewTotal = false;
+    this.purch = false;
     
   }
   
   ngOnInit() {
+  }
+  
+  setPurch(){
+      this.purch = true;
   }
   
   userEmail(){
@@ -100,10 +106,10 @@ export class CartComponent implements OnInit {
                             .subscribe(res => console.log(res),
                             err => console.error(err));
                             break;
-                    }
-                    }else if (this.products[i]._id == value && this.products[i].amount >= (this.carts[j].amount)) {
+                    }else {
                         alert ('Oops! Looks like there is not any more of this product left in stock to add to your cart.');
                         break;
+                    }
                     
                     }
                 }
@@ -135,7 +141,39 @@ export class CartComponent implements OnInit {
                 this.total +=temp;
            }
        }
-       
-       
+   }
+   
+   purchaseItems(){
+       for (var j = 0; j < this.carts.length; j++){
+            if (this.carts[j].username == firebase.auth().currentUser.email){
+                console.log('test');
+                for (var i = 0; i < this.products.length; i++){
+                    if (this.products[i]._id == this.carts[j].productID) {
+                       if (this.products[i].quantity > this.carts[j].amount){
+                         this._dataService.deleteCartItem(this.carts[j]._id)
+                            .subscribe(res => console.log(res),
+                            err => console.error(err));
+                            
+                            var temp1 = this.products[i].quantity - this.carts[j].amount;
+                            var temp2 = this.products[i].purchased + this.carts[j].amount;
+                            var data = {
+                                quantity: temp1,
+                                purchased: temp2
+                            };
+                            var id = this.products[i]._id;
+                            
+                            this._dataService.updateProduct(id, data)
+                            .subscribe(res => console.log(res),
+                                err => console.error(err));
+                            break;
+                    }else {
+                        alert ('Oops! Looks like there is not any more of this product left in stock to add to your cart.');
+                        break;
+                    }
+                    
+                    }
+                }
+            } 
+        }
    }
 }
